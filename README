@@ -1,0 +1,4 @@
+This is the README file for the x11vnc-auto package.
+
+This implements a pair of systemd services for providing an automatic
+VNC login to view the running :0 display on a RHEL 7 system.

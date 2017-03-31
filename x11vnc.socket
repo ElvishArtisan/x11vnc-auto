@@ -1,0 +1,9 @@
+[Unit]
+Description=x11vnc Socket for Per-Connection Servers
+
+[Socket]
+ListenStream=5900
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

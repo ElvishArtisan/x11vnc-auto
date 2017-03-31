@@ -1,0 +1,6 @@
+[Unit]
+Description=x11vnc Per-Connection Server
+
+[Service]
+ExecStart=-/usr/bin/x11vnc -inetd -quiet -o /root/vnc.log -display :0 -once -rfbauth /root/.vnc/passwd
+StandardInput=socket
