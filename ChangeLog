@@ -7,3 +7,5 @@
 2017-05-03 Fred Gleason <fredg@paravelsystems.com>
 	* Added the '--skip_lockkeys' switch to the x11vnc(1) call in
 	'x11vnc-auto@.service'.
+2017-05-03 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'x11vnc-auto.spec'.
