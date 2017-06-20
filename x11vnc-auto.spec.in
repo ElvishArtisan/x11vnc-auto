@@ -1,7 +1,7 @@
 Name:		x11vnc-auto
-Version:	0.7.0
-Release:	1%{?dist}
-Summary:	Automatic VNC login for display:0
+Version:	@VERSION@
+Release:	@RPM_RELEASE@%{?dist}
+Summary:	Automatic VNC login for display :0
 License:	GPLv2
 Source:		%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
@@ -9,7 +9,7 @@ Requires:       x11vnc tigervnc-server-minimal
 
 
 %description
-x11vnc-auto is a set of two Systemd services that together provides the
+x11vnc-auto is a set of two Systemd services that together provide the
 ability to configure an integrated VNC server that will start automatically
 at boot time and provide access to display :0.
 
@@ -17,14 +17,12 @@ at boot time and provide access to display :0.
 %prep
 
 
-%setup -q -n x11vnc-auto
-
+%setup -q
+./configure
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/system
-cp x11vnc-auto@.service $RPM_BUILD_ROOT/usr/lib/systemd/system/
-cp x11vnc-auto.socket $RPM_BUILD_ROOT/usr/lib/systemd/system/
+make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %clean

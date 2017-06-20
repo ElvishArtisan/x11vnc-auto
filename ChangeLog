@@ -11,3 +11,6 @@
 	* Added 'x11vnc-auto.spec'.
 2017-05-03 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 0.7.0.
+2017-06-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added build system for generating RPMs.
+
