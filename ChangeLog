@@ -13,4 +13,5 @@
 	* Incremented the package version to 0.7.0.
 2017-06-20 Fred Gleason <fredg@paravelsystems.com>
 	* Added build system for generating RPMs.
-
+2017-06-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added a '-timeout 5' argument to the x11vnc(1) invocation.
