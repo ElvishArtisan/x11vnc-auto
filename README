@@ -5,11 +5,11 @@ VNC login to view the running :0 display on a RHEL 7 system.
 
 To enable the service:
 
-1) Set the VNC password by opening a root shell and doing:
+1) Set the VNC password by opening a shell for user 'rd' and doing:
 
    vncpasswd
 
-2) Start the service by doing:
+2) Start the service by opening a shell for user 'root' and doing:
 
    systemctl start x11vnc-auto
    systemctl enable x11vnc-auto

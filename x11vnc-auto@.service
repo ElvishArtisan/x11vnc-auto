@@ -2,5 +2,7 @@
 Description=x11vnc Per-Connection Server
 
 [Service]
-ExecStart=-/usr/bin/x11vnc -inetd -quiet -o /root/vnc.log -display :0 -once -rfbauth /root/.vnc/passwd -skip_lockkeys -timeout 5
+User=rd
+Group=rd
+ExecStart=-/usr/bin/x11vnc -inetd -quiet -o /home/rd/vnc.log -display :0 -once -rfbauth /home/rd/.vnc/passwd -skip_lockkeys -timeout 5
 StandardInput=socket

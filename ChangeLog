@@ -17,3 +17,5 @@
 	* Added a '-timeout 5' argument to the x11vnc(1) invocation.
 2017-06-20 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 0.8.0.
+2018-01-11 Fred Gleason <fredg@paravelsystems.com>
+	* Modified service to run x11vnc(1) under user 'rd' rather than 'root'.
