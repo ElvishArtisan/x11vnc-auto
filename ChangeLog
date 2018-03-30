@@ -22,3 +22,5 @@
 2018-01-11 Fred Gleason <fredg@paravelsystems.com>
 	* Updated the 'NEWS' file.
 	* Incremented the package version to 0.9.0.
+2018-03-30 Fred Gleason <fredg@paravelsystems.com>
+	* Modified the SystemD socket service to bind IPv4 only.
