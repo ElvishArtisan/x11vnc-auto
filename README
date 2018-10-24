@@ -11,6 +11,6 @@ To enable the service:
 
 2) Start the service by opening a shell for user 'root' and doing:
 
-   systemctl start x11vnc-auto
-   systemctl enable x11vnc-auto
+   systemctl start x11vnc-auto.socket
+   systemctl enable x11vnc-auto.socket
 
