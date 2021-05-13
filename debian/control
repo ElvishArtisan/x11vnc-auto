@@ -10,6 +10,6 @@ Package: x11vnc-auto
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, x11vnc, tightvncserver
 Description: Automatic VNC login for display :0
- x11vnc-auto is a set of two Systemd services that together provide the
+ x11vnc-auto is a set of two Systemd units that together provide the
  ability to configure an integrated VNC server that will start automatically
  at boot time and provide access to display :0.

@@ -9,7 +9,7 @@ Requires:       x11vnc tigervnc-server-minimal
 
 
 %description
-x11vnc-auto is a set of two Systemd services that together provide the
+x11vnc-auto is a set of two Systemd units that together provide the
 ability to configure an integrated VNC server that will start automatically
 at boot time and provide access to display :0.
 

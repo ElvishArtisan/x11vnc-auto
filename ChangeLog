@@ -33,3 +33,7 @@
 	* Incremented the package version to 1.0.0.
 2021-05-13 Fred Gleason <fredg@paravelsystems.com>
 	* Added a 'make deb' target.
+2021-05-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'postinst', 'postrm' and 'prerm' scripts to the deb
+	package.
+	* Updated the package description.

@@ -25,4 +25,7 @@ SUBDIRS = source
 EXTRA_DIST = changelog\
              control\
              copyright\
+             postinst\
+             postrm\
+             prerm\
              rules
