@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+build:
+	dh_update_autotools_config
+	dh_autoreconf
+	./configure --prefix=/usr
+	make
+
+%:
+	dh $@

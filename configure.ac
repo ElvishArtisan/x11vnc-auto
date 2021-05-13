@@ -4,7 +4,7 @@ dnl Autoconf configuration
 dnl
 dnl Use autoconf to process this into a configure script
 dnl
-dnl   (C) Copyright 2017 Fred Gleason <fredg@paravelsystems.com>
+dnl   (C) Copyright 2017-2021 Fred Gleason <fredg@paravelsystems.com>
 dnl
 dnl   All Rights Reserved.
 dnl
@@ -45,10 +45,14 @@ else
 fi 
 
 AC_CONFIG_FILES([ \
+    debian/Makefile \
+    debian/source/Makefile \
+    build_debs.sh \
     x11vnc-auto.spec \
     Makefile \
 ])
 AC_OUTPUT()
+chmod 755 build_debs.sh
 
 AC_MSG_NOTICE()
 AC_MSG_NOTICE(Now enter 'make' to build the software.)

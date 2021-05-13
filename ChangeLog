@@ -31,3 +31,5 @@
 	* Changed the VNC timeout from 5 to 30 seconds.
 2019-02-05 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 1.0.0.
+2021-05-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'make deb' target.
