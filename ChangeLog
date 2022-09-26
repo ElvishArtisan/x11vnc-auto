@@ -40,3 +40,5 @@
 2022-09-26 Fred Gleason <fredg@paravelsystems.com>
 	* Modified the build system to automatically supply the correct
 	package versioning for the 'make deb' target.
+2022-09-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.0.1.
