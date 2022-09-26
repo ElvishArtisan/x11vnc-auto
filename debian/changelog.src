@@ -1,0 +1,5 @@
+x11vnc-auto (@VERSION@-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Fred Gleason <fredg@paravelsystems.com>  @DATESTAMP@

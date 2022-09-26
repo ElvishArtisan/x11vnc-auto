@@ -2,7 +2,7 @@
 ##
 ## Automake.am for x11vnc-auto debian/
 ##
-##   (C) Copyright 2021 Fred Gleason <fredg@paravelsystems.com>
+##   (C) Copyright 2021-2022 Fred Gleason <fredg@paravelsystems.com>
 ##
 ##   This program is free software; you can redistribute it and/or modify
 ##   it under the terms of the GNU General Public License as
@@ -23,9 +23,14 @@
 SUBDIRS = source
 
 EXTRA_DIST = changelog\
+             changelog.src\
+             control.src\
              control\
              copyright\
              postinst\
              postrm\
              prerm\
              rules
+
+MAINTAINERCLEANFILES = changelog\
+                       control

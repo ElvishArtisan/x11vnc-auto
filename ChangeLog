@@ -37,3 +37,6 @@
 	* Added 'postinst', 'postrm' and 'prerm' scripts to the deb
 	package.
 	* Updated the package description.
+2022-09-26 Fred Gleason <fredg@paravelsystems.com>
+	* Modified the build system to automatically supply the correct
+	package versioning for the 'make deb' target.
