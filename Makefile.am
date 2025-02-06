@@ -1,12 +1,13 @@
 ## Makefile.am
 ##
-## (C) Copyright 2017 Fred Gleason <fredg@paravelsystems.com>
+## (C) Copyright 2017-2024 Fred Gleason <fredg@paravelsystems.com>
 ##
 ##   All Rights Reserved.
 ##
 ## Use automake to process this into a Makefile.in
 
-SUBDIRS = debian
+SUBDIRS = debian\
+          src
 
 install-exec-local:	
 	mkdir -p $(DESTDIR)/usr/lib/systemd/system

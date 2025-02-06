@@ -28,6 +28,16 @@ AR_GET_DISTRO()
 AC_SUBST(DISTRO,$ar_gcc_distro)
 
 #
+# Check for Qt (Mandatory)
+#
+AQ_FIND_QT6(QT6,Core Gui Widgets Network,[],[AC_MSG_ERROR([*** Qt6 not found ***])])
+
+#
+# Check for Switchyard6 (Mandatory)
+#
+PKG_CHECK_MODULES(SWITCHYARD6,switchyard6,[],[AC_MSG_ERROR([*** Switchyard6 not found ***])])
+
+#
 # Configure RPM Build
 #
 AC_CHECK_PROG(RPMBUILD_FOUND,rpmbuild,[yes],[])
@@ -47,6 +57,8 @@ fi
 AC_CONFIG_FILES([ \
     debian/Makefile \
     debian/source/Makefile \
+    src/vncmon/Makefile \
+    src/Makefile \
     build_debs.sh \
     x11vnc-auto.spec \
     Makefile \
