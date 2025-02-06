@@ -1,12 +1,13 @@
 ## Makefile.am
 ##
-## (C) Copyright 2017-2024 Fred Gleason <fredg@paravelsystems.com>
+## (C) Copyright 2017-2025 Fred Gleason <fredg@paravelsystems.com>
 ##
 ##   All Rights Reserved.
 ##
 ## Use automake to process this into a Makefile.in
 
-SUBDIRS = debian\
+SUBDIRS = conf\
+          debian\
           src
 
 install-exec-local:	
@@ -62,6 +63,7 @@ MAINTAINERCLEANFILES = *~\
                        aclocal.m4\
                        compile\
                        configure\
+                       depcomp\
                        install-sh\
                        Makefile.in\
                        missing

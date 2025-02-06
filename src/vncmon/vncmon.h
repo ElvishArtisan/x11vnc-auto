@@ -26,8 +26,10 @@
 
 #include "connectionlistmodel.h"
 #include "connectionlistview.h"
+#include "profile.h"
 
 #define VNCMON_SCAN_INTERVAL 5000
+#define VNCMON_CONFIG_FILE "/etc/vncmon.conf"
 #define VNCMON_USAGE "[options]\n"
 
 class MainWidget : public QWidget
@@ -44,6 +46,7 @@ class MainWidget : public QWidget
  private:
   ConnectionListView *d_connection_listview;
   ConnectionListModel *d_connection_model;
+  Profile *d_profile;
 };
 
 

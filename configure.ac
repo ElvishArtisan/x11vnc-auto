@@ -55,6 +55,7 @@ else
 fi 
 
 AC_CONFIG_FILES([ \
+    conf/Makefile \
     debian/Makefile \
     debian/source/Makefile \
     src/vncmon/Makefile \

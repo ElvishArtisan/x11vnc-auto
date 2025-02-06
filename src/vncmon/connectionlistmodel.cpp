@@ -128,6 +128,19 @@ Connection ConnectionListModel::connection(const QModelIndex &index) const
 }
 
 
+QList<QHostAddress> ConnectionListModel::whitelistedAddresses() const
+{
+  return d_whitelisted_addresses;
+}
+
+
+void ConnectionListModel::
+setWhitelistedAddresses(const QList<QHostAddress> &addrs)
+{
+  d_whitelisted_addresses=addrs;
+}
+
+
 int ConnectionListModel::rowCount(const QModelIndex &parent) const
 {
   return d_connections.size();
@@ -205,7 +218,8 @@ void ConnectionListModel::UpdateConnections()
   QList<Connection> new_conns;
   for(QMap<int,Connection>::const_iterator it=conns.begin();it!=conns.end();
       it++) {
-    if(!d_connections.contains(it.value())) {
+    if((!d_connections.contains(it.value()))&&
+       (!d_whitelisted_addresses.contains(it.value().address()))) {
       new_conns.push_back(it.value());
       QHostInfo::lookupHost(it.value().address().toString(),
 			    this,&ConnectionListModel::hostLookupFinished);

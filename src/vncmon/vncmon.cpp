@@ -29,14 +29,35 @@
 #include <QMessageBox>
 #include <QStringList>
 
+#include "cmdswitch.h"
 #include "vncmon.h"
 
 MainWidget::MainWidget(QWidget *parent)
   : QWidget(parent)
 {
+  QString err_msg;
+  CmdSwitch *cmd=new CmdSwitch("vncmon",VERSION,VNCMON_USAGE);
+  for(int i=0;i<cmd->keys();i++) {
+    if(!cmd->processed(i)) {
+      QMessageBox::critical(this,tr("VNC Monitor - Error"),
+			    tr("Unknown option")+
+			    " \""+cmd->key(i)+"\" given.");
+      exit(1);
+    }
+  }
+
   setWindowTitle(tr("VNC Monitor")+QString::asprintf(" [v%s]",VERSION));
 
+  d_profile=new Profile();
+  if(!d_profile->loadFile(VNCMON_CONFIG_FILE,&err_msg)) {
+    QMessageBox::critical(this,tr("VNC Monitor - Error"),err_msg);
+    exit(1);
+  }
+
   d_connection_model=new ConnectionListModel(this);
+  QList<QHostAddress> addrs=d_profile->addressValues("Vncmon","Whitelist");
+  d_connection_model->setWhitelistedAddresses(addrs);
+    
   d_connection_listview=new ConnectionListView(this);
   d_connection_listview->setModel(d_connection_model);
 

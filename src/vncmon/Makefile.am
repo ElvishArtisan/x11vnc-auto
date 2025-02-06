@@ -31,8 +31,10 @@ moc_%.cpp:	%.h
 
 bin_PROGRAMS = vncmon
 
-dist_vncmon_SOURCES = connectionlistmodel.cpp connectionlistmodel.h\
+dist_vncmon_SOURCES = cmdswitch.cpp cmdswitch.h\
+                      connectionlistmodel.cpp connectionlistmodel.h\
                       connectionlistview.cpp connectionlistview.h\
+                      profile.cpp profile.h\
                       vncmon.cpp vncmon.h
 
 nodist_vncmon_SOURCES = moc_connectionlistmodel.cpp\
