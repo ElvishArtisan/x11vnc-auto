@@ -3,7 +3,9 @@
 *.changes
 *.deb
 *.ddeb
+*.deps
 *.dsc
+*.o
 *.rpm
 *.spec
 *.tar.gz
@@ -17,7 +19,10 @@ config.status
 configure
 debian/changelog
 debian/control
+depcomp
 install-sh
 Makefile
 Makefile.in
 missing
+moc_*
+src/vncmon/vncmon
