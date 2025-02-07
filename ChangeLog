@@ -47,3 +47,5 @@
 2025-02-06 Fred Gleason <fredg@paravelsystems.com>
 	* Added Exemplar v2.0.1.
 	* Added support for a vncmon.conf(5) file in '/etc/vncmon.conf'.
+2025-02-07 Fred Gleason <fredg@paravelsystems.com>
+	* Integrated x11vnc v0.9.16ea1 into the build.

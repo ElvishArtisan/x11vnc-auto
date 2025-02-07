@@ -60,6 +60,9 @@ AC_CONFIG_FILES([ \
     debian/source/Makefile \
     src/vncmon/Makefile \
     src/Makefile \
+    systemd/x11vnc-auto@.service \
+    systemd/Makefile \
+    x11vnc/Makefile \
     build_debs.sh \
     x11vnc-auto.spec \
     Makefile \

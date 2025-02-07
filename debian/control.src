@@ -7,9 +7,11 @@ Standards-Version: 4.4.1
 Homepage: https://github.com/ElvishArtisan/x11vnc-auto
 
 Package: x11vnc-auto
-Architecture: all
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, x11vnc, tightvncserver
 Description: Automatic VNC login for display :0
- x11vnc-auto is a set of two Systemd units that together provide the
- ability to configure an integrated VNC server that will start automatically
- at boot time and provide access to display :0.
+ x11vnc-auto is a utility that provides the ability to configure an
+ integrated VNC server that will start automatically at boot time and
+ provide access to display :0. It also includes an applet that can monitor
+ the existing viewer connections and kick undesired instances.
+

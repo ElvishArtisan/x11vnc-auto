@@ -8,16 +8,9 @@
 
 SUBDIRS = conf\
           debian\
-          src
-
-install-exec-local:	
-	mkdir -p $(DESTDIR)/usr/lib/systemd/system
-	cp x11vnc-auto@.service $(DESTDIR)/usr/lib/systemd/system/
-	cp x11vnc-auto.socket $(DESTDIR)/usr/lib/systemd/system/
-
-uninstall-local:	
-	rm -f $(DESTDIR)/usr/lib/systemd/system/x11vnc-auto@.service
-	rm -f $(DESTDIR)/usr/lib/systemd/system/x11vnc-auto.socket
+          src\
+          systemd\
+          x11vnc
 
 deb:	dist
 	./build_debs.sh
@@ -33,8 +26,6 @@ rpm:	dist
 EXTRA_DIST = build_debs.sh.in\
              get_distro.pl\
              get_target.sh\
-             x11vnc-auto@.service\
-             x11vnc-auto.socket\
              x11vnc-auto.spec.in\
              PACKAGE_VERSION
 
@@ -48,7 +39,7 @@ CLEANFILES = *~\
              *.exe\
              *.mo\
              *.rpm\
-             *.tar.gz\
+             x11vnc-auto*.tar.gz\
              *.tar.xz\
              *.tgz\
              *.zip

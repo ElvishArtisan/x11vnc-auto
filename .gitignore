@@ -8,8 +8,6 @@
 *.o
 *.rpm
 *.spec
-*.tar.gz
-*.tar.xz
 aclocal.m4
 autom4te.cache
 build_debs.sh
@@ -25,4 +23,5 @@ Makefile
 Makefile.in
 missing
 moc_*
+x11vnc-auto-*.tar.gz
 src/vncmon/vncmon
