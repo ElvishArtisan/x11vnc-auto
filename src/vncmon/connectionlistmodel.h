@@ -77,6 +77,7 @@ class ConnectionListModel : public QAbstractListModel
  private:
   void UpdateConnections();
   void LoadConnectionTable(QMap<int,Connection> &conntab);
+  void UpdateGenmon(int conn_quan);
   QTimer *d_scan_timer;
   QProcess *d_scan_process;
   QDir *d_proc_dir;

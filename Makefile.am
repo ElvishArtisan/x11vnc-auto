@@ -8,6 +8,7 @@
 
 SUBDIRS = conf\
           debian\
+          icons\
           src\
           systemd\
           x11vnc

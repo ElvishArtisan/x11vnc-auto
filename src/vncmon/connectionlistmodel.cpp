@@ -22,8 +22,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <QProcess>
 
 #include "connectionlistmodel.h"
 
@@ -233,6 +236,8 @@ void ConnectionListModel::UpdateConnections()
     }
     endInsertRows();
   }
+
+  UpdateGenmon(d_connections.size());
 }
 
 
@@ -293,4 +298,56 @@ void ConnectionListModel::LoadConnectionTable(QMap<int,Connection> &conntab)
       rename(connpath_update.toUtf8(),connpath.toUtf8());
     }
   }
+}
+
+
+void ConnectionListModel::UpdateGenmon(int conn_quan)
+{
+  FILE *f=NULL;
+
+  //
+  // Generate the script
+  //
+  QString genmon_path=QDir::homePath()+"/.vnc/xfce4-genmon.sh";
+  QString genmon_path_new=genmon_path+"-new";
+  if((f=fopen(genmon_path_new.toUtf8(),"w"))!=NULL) {
+    fprintf(f,"#!/bin/bash\n");
+    fprintf(f,"\n");
+    switch(conn_quan) {
+    case 0:
+      fprintf(f,"echo \"<tool>No VNC connections</tool>\"\n");
+      break;
+
+    case 1:
+      fprintf(f,"echo \"<tool>1 VNC connection</tool>\"\n");
+      break;
+
+    default:
+      fprintf(f,"echo \"<tool>%d VNC connections</tool>\"\n",conn_quan);
+      break;
+    }
+    if(conn_quan>6) {
+      fprintf(f,"echo \"<img>/usr/share/x11vnc-auto/vncmon-many.png</img>\"\n");
+    }
+    else {
+      fprintf(f,"echo \"<img>/usr/share/x11vnc-auto/vncmon-%d.png</img>\"\n",
+	      conn_quan);
+    }
+    fclose(f);
+    chmod(genmon_path_new.toUtf8(),S_IRUSR|S_IWUSR|S_IXUSR);
+    rename(genmon_path_new.toUtf8(),genmon_path.toUtf8());
+  }
+  else {
+    fprintf(stderr,"file open failed: %s\n",strerror(errno));
+  }
+
+  //
+  // Refresh the plug-in
+  //
+  QStringList args;
+  args.push_back("--plugin-event=genmon-15:refresh:bool:true");
+  QProcess *proc=new QProcess(this);
+  proc->start("/usr/bin/xfce4-panel",args);
+  proc->waitForFinished();
+  delete proc;
 }

@@ -58,6 +58,7 @@ AC_CONFIG_FILES([ \
     conf/Makefile \
     debian/Makefile \
     debian/source/Makefile \
+    icons/Makefile \
     src/vncmon/Makefile \
     src/Makefile \
     systemd/x11vnc-auto@.service \
