@@ -22,6 +22,7 @@
 #ifndef VNCMON_H
 #define VNCMON_H
 
+#include <QSocketNotifier>
 #include <QWidget>
 
 #include "connectionlistmodel.h"
@@ -39,6 +40,9 @@ class MainWidget : public QWidget
   MainWidget(QWidget *parent=0);
   QSize sizeHint() const;
 
+ private slots:
+  void signalReceivedData();
+  
  protected:
   void closeEvent(QCloseEvent *e);
   void resizeEvent(QResizeEvent *e);
@@ -47,6 +51,7 @@ class MainWidget : public QWidget
   ConnectionListView *d_connection_listview;
   ConnectionListModel *d_connection_model;
   Profile *d_profile;
+  QSocketNotifier *d_signal_notifier;
 };
 
 

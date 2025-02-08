@@ -24,6 +24,7 @@
 
 #include <QAbstractListModel>
 #include <QDir>
+#include <QFontMetrics>
 #include <QHostAddress>
 #include <QHostInfo>
 #include <QProcess>
@@ -62,9 +63,11 @@ class ConnectionListModel : public QAbstractListModel
   Q_OBJECT
  public:
   ConnectionListModel(QWidget *parent=0);
+  ~ConnectionListModel();
   Connection connection(const QModelIndex &index) const;
   QList<QHostAddress> whitelistedAddresses() const;
   void setWhitelistedAddresses(const QList<QHostAddress> &addrs);
+  void setFont(const QFont &font);
   int rowCount(const QModelIndex &parent) const;
   QVariant data(const QModelIndex &index,int role=Qt::DisplayRole) const;
   QVariant headerData(int section,Qt::Orientation orient,
@@ -83,6 +86,7 @@ class ConnectionListModel : public QAbstractListModel
   QDir *d_proc_dir;
   QList<Connection> d_connections;
   QList<QHostAddress> d_whitelisted_addresses;
+  QFontMetrics *d_font_metrics;
 };
 
 

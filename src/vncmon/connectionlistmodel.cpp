@@ -30,6 +30,8 @@
 
 #include "connectionlistmodel.h"
 
+#define CONNECTIONLISTMODEL_ROW_HEIGHT 24
+
 Connection::Connection(int pid,const QHostAddress &addr,int port)
 {
   d_pid=pid;
@@ -112,6 +114,7 @@ ConnectionListModel::ConnectionListModel(QWidget *parent)
   : QAbstractListModel((QObject *)parent)
 {
   d_scan_process=NULL;
+  d_font_metrics=NULL;
 
   d_proc_dir=new QDir("/proc");
 
@@ -119,6 +122,12 @@ ConnectionListModel::ConnectionListModel(QWidget *parent)
   d_scan_timer->setSingleShot(true);
   connect(d_scan_timer,SIGNAL(timeout()),this,SLOT(scanData()));
   d_scan_timer->start(0);
+}
+
+
+ConnectionListModel::~ConnectionListModel()
+{
+  delete d_font_metrics;
 }
 
 
@@ -144,6 +153,12 @@ setWhitelistedAddresses(const QList<QHostAddress> &addrs)
 }
 
 
+void ConnectionListModel::setFont(const QFont &font)
+{
+  d_font_metrics=new QFontMetrics(font);
+}
+
+
 int ConnectionListModel::rowCount(const QModelIndex &parent) const
 {
   return d_connections.size();
@@ -157,6 +172,10 @@ QVariant ConnectionListModel::data(const QModelIndex &index,int role) const
   switch(role) {
   case Qt::DisplayRole:
     return d_connections.at(row).idString();
+
+  case Qt::SizeHintRole:
+    return QSize(d_font_metrics->horizontalAdvance(d_connections.at(row).idString()),
+		 CONNECTIONLISTMODEL_ROW_HEIGHT);
   }
 
   return QVariant();
@@ -313,6 +332,7 @@ void ConnectionListModel::UpdateGenmon(int conn_quan)
   if((f=fopen(genmon_path_new.toUtf8(),"w"))!=NULL) {
     fprintf(f,"#!/bin/bash\n");
     fprintf(f,"\n");
+    fprintf(f,"echo \"<click>kill -s SIGUSR1 %d</click>\"\n",getpid());
     switch(conn_quan) {
     case 0:
       fprintf(f,"echo \"<tool>No VNC connections</tool>\"\n");

@@ -19,6 +19,7 @@
 //   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -32,8 +33,18 @@
 #include "cmdswitch.h"
 #include "vncmon.h"
 
+static int global_signal_sockets[2];
+
+void SigHandler(int signum)
+{
+  char data[1]={0};
+
+  write(global_signal_sockets[0],data,1);
+}
+
+
 MainWidget::MainWidget(QWidget *parent)
-  : QWidget(parent)
+  : QWidget(parent,Qt::FramelessWindowHint)
 {
   QString err_msg;
   CmdSwitch *cmd=new CmdSwitch("vncmon",VERSION,VNCMON_USAGE);
@@ -55,18 +66,60 @@ MainWidget::MainWidget(QWidget *parent)
   }
 
   d_connection_model=new ConnectionListModel(this);
+  d_connection_model->setFont(font());
   QList<QHostAddress> addrs=d_profile->addressValues("Vncmon","Whitelist");
   d_connection_model->setWhitelistedAddresses(addrs);
     
   d_connection_listview=new ConnectionListView(this);
   d_connection_listview->setModel(d_connection_model);
 
+  struct sigaction action;
+  memset(&action,0,sizeof(action));
+  action.sa_handler=SigHandler;
+  action.sa_flags=SA_RESTART;
+  sigaction(SIGUSR1,&action,NULL);
+
+  if(::socketpair(AF_UNIX,SOCK_STREAM,0,global_signal_sockets)!=0) {
+    fprintf(stderr,"can't create socket pair: %s\n",strerror(errno));
+    exit(1);
+  }
+  d_signal_notifier=
+    new QSocketNotifier(global_signal_sockets[1],QSocketNotifier::Read,this);
+  connect(d_signal_notifier,
+	  SIGNAL(activated(QSocketDescriptor,QSocketNotifier::Type)),
+	  this,SLOT(signalReceivedData()));
 }
 
 
 QSize MainWidget::sizeHint() const
 {
   return QSize(200,100);
+}
+
+
+void MainWidget::signalReceivedData()
+{
+  char data[1];
+  read(global_signal_sockets[1],data,1);
+
+  if(isVisible()) {
+    hide();
+  }
+  else {
+    int width=0;
+    int height=0;
+    for(int i=0;i<d_connection_model->rowCount(QModelIndex());i++) {
+      QSize s=d_connection_model->data(d_connection_model->index(i,0),
+				       Qt::SizeHintRole).toSize();
+      height+=s.height();
+      if(s.width()>width) {
+	width=s.width();
+      }
+    }
+    show();
+    printf("size: %dx%d\n",width,height);
+    resize(50+width,24+height);
+  }
 }
 
 

@@ -51,3 +51,5 @@
 	* Integrated x11vnc v0.9.16ea1 into the build.
 2025-02-07 Fred Gleason <fredg@paravelsystems.com>
 	* Added support for a tray applet using the XFCE4 'Genmon' plug-in.
+2025-02-07 Fred Gleason <fredg@paravelsystems.com>
+	* Added a set of icons for the XFCE plug-in.
