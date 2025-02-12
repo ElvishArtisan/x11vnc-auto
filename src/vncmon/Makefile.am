@@ -20,7 +20,7 @@
 ##
 ## Use automake to process this into a Makefile.in
 
-AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -I$(top_srcdir)/src -Wno-strict-aliasing -std=c++17 -fPIC @QT6_CFLAGS@ @SWITCHYARD6_CFLAGS@
+AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -I$(top_srcdir)/src -Wno-strict-aliasing -std=c++17 -fPIC @QT6_CFLAGS@
 LIBS = -L$(top_srcdir)/src/drouter
 MOC = @QT6_MOC@
 
@@ -32,6 +32,7 @@ moc_%.cpp:	%.h
 bin_PROGRAMS = vncmon
 
 dist_vncmon_SOURCES = cmdswitch.cpp cmdswitch.h\
+                      config.cpp config.h\
                       connectionlistmodel.cpp connectionlistmodel.h\
                       connectionlistview.cpp connectionlistview.h\
                       profile.cpp profile.h\
@@ -41,8 +42,10 @@ nodist_vncmon_SOURCES = moc_connectionlistmodel.cpp\
                         moc_connectionlistview.cpp\
                         moc_vncmon.cpp
 
-vncmon_LDADD = @QT6_LIBS@ @SWITCHYARD6_LIBS@
+vncmon_LDADD = @QT6_LIBS@
 #vncmon_LDFLAGS = -rdynamic
+
+EXTRA_DIST = paths.h.in
 
 CLEANFILES = *~\
              moc_*\
@@ -51,7 +54,7 @@ CLEANFILES = *~\
              *.pdb\
              *ilk
 
-DISTCLEANFILES = 
+DISTCLEANFILES = paths.h
 
 MAINTAINERCLEANFILES = *~\
                        Makefile.in

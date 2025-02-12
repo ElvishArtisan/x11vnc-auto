@@ -24,7 +24,7 @@
 rm -rf x11vnc-0.9.16ea1
 tar -zvxf x11vnc-0.9.16ea1.tar.gz
 cd x11vnc-0.9.16ea1
-./autogen.sh --bindir=/usr/lib/x11vnc-auto
+./autogen.sh --bindir=@bindir@
 make $DEBBUILD_MAKE_ARGS
 cp src/x11vnc ../
 cd ..

@@ -29,6 +29,7 @@
 #include <QProcess>
 
 #include "connectionlistmodel.h"
+#include "paths.h"
 
 #define CONNECTIONLISTMODEL_ROW_HEIGHT 24
 
@@ -332,6 +333,13 @@ void ConnectionListModel::UpdateGenmon(int conn_quan)
   if((f=fopen(genmon_path_new.toUtf8(),"w"))!=NULL) {
     fprintf(f,"#!/bin/bash\n");
     fprintf(f,"\n");
+    fprintf(f,"GENTIME=%llu\n",QDateTime::currentDateTime().toSecsSinceEpoch());
+    fprintf(f,"NOW=`date +%%s`\n");
+    fprintf(f,"DIFF=`bc <<<\"$NOW-$GENTIME\"`\n");
+    fprintf(f,"if test $DIFF -gt 10 ; then\n");
+    fprintf(f,"  %s/vncmon -display :0 &\n",BINDIR_PATH);
+    fprintf(f,"  exit 0\n");
+    fprintf(f,"fi\n");
     fprintf(f,"echo \"<click>kill -s SIGUSR1 %d</click>\"\n",getpid());
     switch(conn_quan) {
     case 0:
@@ -365,9 +373,24 @@ void ConnectionListModel::UpdateGenmon(int conn_quan)
   // Refresh the plug-in
   //
   QStringList args;
-  args.push_back("--plugin-event=genmon-15:refresh:bool:true");
+  args.push_back("ax");
   QProcess *proc=new QProcess(this);
-  proc->start("/usr/bin/xfce4-panel",args);
+  proc->start("/bin/ps",args);
   proc->waitForFinished();
+  QStringList f0=QString::fromUtf8(proc->readAllStandardOutput()).split("\n");
   delete proc;
+  int offset;
+  for(int i=0;i<f0.size();i++) {
+    if((offset=f0.at(i).indexOf("libgenmon.so"))>0) {
+      QString plugin_cmd=
+	QString::asprintf("--plugin-event=genmon-%d:refresh:bool:true",
+			  f0.at(i).mid(offset+12,4).toInt());
+      args.clear();
+      args.push_back(plugin_cmd);
+      proc=new QProcess(this);
+      proc->start("/usr/bin/xfce4-panel",args);
+      proc->waitForFinished();
+      delete proc;
+    }
+  }
 }

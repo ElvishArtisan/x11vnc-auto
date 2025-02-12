@@ -1,0 +1,10 @@
+@GENERATED_C_FILE_WARNING@
+
+#ifndef PATHS_H
+#define PATHS_H
+
+#define PREFIX_PATH "@prefix@"
+#define BINDIR_PATH "@bindir@"
+
+
+#endif // PATHS_H

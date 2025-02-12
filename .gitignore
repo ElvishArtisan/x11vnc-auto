@@ -24,6 +24,8 @@ Makefile.in
 missing
 moc_*
 x11vnc-auto-*.tar.gz
+src/vncmon/paths.h
 src/vncmon/vncmon
 systemd/x11vnc-auto@.service
+x11vnc/build_x11vnc.sh
 x11vnc/x11vnc

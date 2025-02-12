@@ -53,3 +53,9 @@
 	* Added support for a tray applet using the XFCE4 'Genmon' plug-in.
 2025-02-07 Fred Gleason <fredg@paravelsystems.com>
 	* Added a set of icons for the XFCE plug-in.
+2025-02-12 Fred Gleason <fredg@paravelsystems.com>
+	* Composed the contents of 'INSTALL'.
+	* Added a 'Config' class for vncmon(1).
+	* Added code to allow vncmon(1) to be auto-started by the genmon
+	plug-in.
+	* Removed the external 'x11vnc' dependency from the DEB package.

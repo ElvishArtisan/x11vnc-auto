@@ -22,15 +22,17 @@
 #ifndef VNCMON_H
 #define VNCMON_H
 
+#include <QLabel>
 #include <QSocketNotifier>
+#include <QTimer>
 #include <QWidget>
 
+#include "config.h"
 #include "connectionlistmodel.h"
 #include "connectionlistview.h"
 #include "profile.h"
 
 #define VNCMON_SCAN_INTERVAL 5000
-#define VNCMON_CONFIG_FILE "/etc/vncmon.conf"
 #define VNCMON_USAGE "[options]\n"
 
 class MainWidget : public QWidget
@@ -42,16 +44,19 @@ class MainWidget : public QWidget
 
  private slots:
   void signalReceivedData();
-  
+  void startupData();
+
  protected:
   void closeEvent(QCloseEvent *e);
   void resizeEvent(QResizeEvent *e);
 
  private:
+  QLabel *d_connection_label;
   ConnectionListView *d_connection_listview;
   ConnectionListModel *d_connection_model;
-  Profile *d_profile;
+  Config *d_config;
   QSocketNotifier *d_signal_notifier;
+  QTimer *d_startup_timer;
 };
 
 

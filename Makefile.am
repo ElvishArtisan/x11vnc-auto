@@ -8,6 +8,7 @@
 
 SUBDIRS = conf\
           debian\
+          helpers\
           icons\
           src\
           systemd\

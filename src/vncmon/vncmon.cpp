@@ -23,11 +23,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
 #include <QApplication>
+#include <QCloseEvent>
 #include <QMessageBox>
+#include <QRect>
 #include <QStringList>
 
 #include "cmdswitch.h"
@@ -44,7 +47,7 @@ void SigHandler(int signum)
 
 
 MainWidget::MainWidget(QWidget *parent)
-  : QWidget(parent,Qt::FramelessWindowHint)
+  : QWidget(parent)
 {
   QString err_msg;
   CmdSwitch *cmd=new CmdSwitch("vncmon",VERSION,VNCMON_USAGE);
@@ -58,27 +61,46 @@ MainWidget::MainWidget(QWidget *parent)
   }
 
   setWindowTitle(tr("VNC Monitor")+QString::asprintf(" [v%s]",VERSION));
+  QFont bold_font(font().family(),font().pointSize(),QFont::Bold);
 
-  d_profile=new Profile();
-  if(!d_profile->loadFile(VNCMON_CONFIG_FILE,&err_msg)) {
-    QMessageBox::critical(this,tr("VNC Monitor - Error"),err_msg);
-    exit(1);
+  d_config=new Config();
+  d_config->load();
+
+  //
+  // Check (and if needed, create) the VNC config directory
+  //
+  if(!QDir::home().exists(".vnc")) {
+    if(!QDir::home().mkdir(".vnc")) {
+      QMessageBox::warning(this,tr("VNC Monitor - Warning"),
+			   tr("Unable to create VNC configuration directory!"));
+    }
+    else {
+      if(chmod((QDir::homePath()+"/.vnc").toUtf8(),
+	       S_IRUSR|S_IWUSR|S_IXUSR)!=0) {
+	QMessageBox::warning(this,tr("VNC Monitor - Warning"),
+	     tr("Unable to set permissions on  VNC configuration directory!"));
+      }
+    }
   }
+
+  d_connection_label=new QLabel(tr("VNC Connections"),this);
+  d_connection_label->setFont(bold_font);
 
   d_connection_model=new ConnectionListModel(this);
   d_connection_model->setFont(font());
-  QList<QHostAddress> addrs=d_profile->addressValues("Vncmon","Whitelist");
-  d_connection_model->setWhitelistedAddresses(addrs);
-    
+  d_connection_model->setWhitelistedAddresses(d_config->whitelist());
+
   d_connection_listview=new ConnectionListView(this);
   d_connection_listview->setModel(d_connection_model);
 
+  //
+  // SIGUSR1 Signal Handler
+  //
   struct sigaction action;
   memset(&action,0,sizeof(action));
   action.sa_handler=SigHandler;
   action.sa_flags=SA_RESTART;
   sigaction(SIGUSR1,&action,NULL);
-
   if(::socketpair(AF_UNIX,SOCK_STREAM,0,global_signal_sockets)!=0) {
     fprintf(stderr,"can't create socket pair: %s\n",strerror(errno));
     exit(1);
@@ -88,12 +110,20 @@ MainWidget::MainWidget(QWidget *parent)
   connect(d_signal_notifier,
 	  SIGNAL(activated(QSocketDescriptor,QSocketNotifier::Type)),
 	  this,SLOT(signalReceivedData()));
+
+  //
+  // Startup Timer
+  //
+  d_startup_timer=new QTimer(this);
+  d_startup_timer->setSingleShot(true);
+  connect(d_startup_timer,SIGNAL(timeout()),this,SLOT(startupData()));
+  d_startup_timer->start(10000);
 }
 
 
 QSize MainWidget::sizeHint() const
 {
-  return QSize(200,100);
+  return QSize(300,200);
 }
 
 
@@ -101,45 +131,54 @@ void MainWidget::signalReceivedData()
 {
   char data[1];
   read(global_signal_sockets[1],data,1);
+  setVisible(!isVisible());
+}
 
-  if(isVisible()) {
-    hide();
-  }
-  else {
-    int width=0;
-    int height=0;
-    for(int i=0;i<d_connection_model->rowCount(QModelIndex());i++) {
-      QSize s=d_connection_model->data(d_connection_model->index(i,0),
-				       Qt::SizeHintRole).toSize();
-      height+=s.height();
-      if(s.width()>width) {
-	width=s.width();
+
+void MainWidget::startupData()
+{
+  //
+  // Restart the plug-in
+  //
+  QStringList args;
+  args.push_back("ax");
+  QProcess *proc=new QProcess(this);
+  proc->start("/bin/ps",args);
+  proc->waitForFinished();
+  QStringList f0=QString::fromUtf8(proc->readAllStandardOutput()).split("\n");
+  delete proc;
+  int offset;
+  for(int i=0;i<f0.size();i++) {
+    if((offset=f0.at(i).indexOf("libgenmon.so"))>0) {
+      bool ok=false;
+      QStringList f1=f0.at(i).split(" ",Qt::SkipEmptyParts);
+      unsigned pid=f1.at(0).toUInt(&ok);
+      if(ok) {
+	kill(pid,SIGTERM);
       }
     }
-    show();
-    printf("size: %dx%d\n",width,height);
-    resize(50+width,24+height);
   }
 }
 
 
 void MainWidget::closeEvent(QCloseEvent *e)
 {
-  exit(0);
+  e->ignore();
+  hide();
 }
 
 
 void MainWidget::resizeEvent(QResizeEvent *e)
 {
-  d_connection_listview->setGeometry(0,0,size().width(),size().height());
+  d_connection_label->setGeometry(10,2,width(),20);
+  d_connection_listview->setGeometry(10,25,size().width()-20,size().height()-35);
 }
 
 
 int main(int argc,char *argv[]) {
   QApplication a(argc,argv);
 
-  MainWidget *w=new MainWidget();
-  w->show();
+  new MainWidget();
 
   return a.exec();
 }
