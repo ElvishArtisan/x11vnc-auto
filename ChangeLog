@@ -63,3 +63,5 @@
 	* Added 'INSTALL' to the documentation directory in the DEB
 	package.
 	* Removed icons from the theme database.
+2025-02-12 Fred Gleason <fredg@paravelsystems.com>
+	* Added a window icon to vncmon(1).

@@ -36,6 +36,11 @@
 #include "cmdswitch.h"
 #include "vncmon.h"
 
+//
+// Icons
+//
+#include "../../icons/vncmon-16x16.xpm"
+
 static int global_signal_sockets[2];
 
 void SigHandler(int signum)
@@ -61,6 +66,7 @@ MainWidget::MainWidget(QWidget *parent)
   }
 
   setWindowTitle(tr("VNC Monitor")+QString::asprintf(" [v%s]",VERSION));
+  setWindowIcon(QPixmap(vncmon_16x16_xpm));
   QFont bold_font(font().family(),font().pointSize(),QFont::Bold);
 
   d_config=new Config();
