@@ -59,3 +59,7 @@
 	* Added code to allow vncmon(1) to be auto-started by the genmon
 	plug-in.
 	* Removed the external 'x11vnc' dependency from the DEB package.
+2025-02-12 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'INSTALL' to the documentation directory in the DEB
+	package.
+	* Removed icons from the theme database.

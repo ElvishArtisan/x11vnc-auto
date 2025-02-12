@@ -21,10 +21,6 @@
 ## Use automake to process this into a Makefile.in
 
 install-exec-am:	
-	mkdir -p $(DESTDIR)@prefix@/share/icons/hicolor/16x16/apps
-	cp vncmon-16x16.png $(DESTDIR)@prefix@/share/icons/hicolor/16x16/apps/vncmon.png
-	mkdir -p $(DESTDIR)@prefix@/share/icons/hicolor/32x32/apps
-	cp vncmon-32x32.png $(DESTDIR)@prefix@/share/icons/hicolor/32x32/apps/vncmon.png
 	mkdir -p $(DESTDIR)@prefix@/share/x11vnc-auto
 	cp vncmon-0.png $(DESTDIR)@prefix@/share/x11vnc-auto/
 	cp vncmon-1.png $(DESTDIR)@prefix@/share/x11vnc-auto/
@@ -36,8 +32,6 @@ install-exec-am:
 	cp vncmon-many.png $(DESTDIR)@prefix@/share/x11vnc-auto/
 
 uninstall-local:	
-	rm -f $(DESTDIR)@prefix@/share/icons/hicolor/16x16/apps/vncmon.png
-	rm -f $(DESTDIR)@prefix@/share/icons/hicolor/32x32/apps/vncmon.png
 	rm -f $(DESTDIR)@prefix@/share/x11vnc-auto/vncmon-0.png
 	rm -f $(DESTDIR)@prefix@/share/x11vnc-auto/vncmon-1.png
 	rm -f $(DESTDIR)@prefix@/share/x11vnc-auto/vncmon-2.png

@@ -3,7 +3,7 @@
 build:	
 	dh_update_autotools_config
 	dh_autoreconf
-	 ./configure --prefix=/usr --libdir=/usr/lib
+	 ./configure --prefix=/usr --bindir=/usr/lib/x11vnc-auto
 	make $(DEBUILD_MAKE_ARGS)
 
 binary:	
@@ -11,6 +11,8 @@ binary:
 	dh_prep
 	dh_auto_install
 	dh_installchangelogs ChangeLog
+
+	cp INSTALL debian/x11vnc-auto/usr/share/doc/x11vnc-auto/
 
 	dh_strip_nondeterminism
 	dh_compress
