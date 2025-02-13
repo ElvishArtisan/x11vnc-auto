@@ -32,7 +32,6 @@ moc_%.cpp:	%.h
 bin_PROGRAMS = vncmon
 
 dist_vncmon_SOURCES = cmdswitch.cpp cmdswitch.h\
-                      config.cpp config.h\
                       connectionlistmodel.cpp connectionlistmodel.h\
                       connectionlistview.cpp connectionlistview.h\
                       profile.cpp profile.h\

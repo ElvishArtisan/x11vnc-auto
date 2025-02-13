@@ -30,6 +30,7 @@
 
 #include "connectionlistmodel.h"
 #include "paths.h"
+#include "profile.h"
 
 #define CONNECTIONLISTMODEL_ROW_HEIGHT 24
 
@@ -141,19 +142,6 @@ Connection ConnectionListModel::connection(const QModelIndex &index) const
 }
 
 
-QList<QHostAddress> ConnectionListModel::whitelistedAddresses() const
-{
-  return d_whitelisted_addresses;
-}
-
-
-void ConnectionListModel::
-setWhitelistedAddresses(const QList<QHostAddress> &addrs)
-{
-  d_whitelisted_addresses=addrs;
-}
-
-
 void ConnectionListModel::setFont(const QFont &font)
 {
   d_font_metrics=new QFontMetrics(font);
@@ -175,7 +163,8 @@ QVariant ConnectionListModel::data(const QModelIndex &index,int role) const
     return d_connections.at(row).idString();
 
   case Qt::SizeHintRole:
-    return QSize(d_font_metrics->horizontalAdvance(d_connections.at(row).idString()),
+    return QSize(d_font_metrics->
+		 horizontalAdvance(d_connections.at(row).idString()),
 		 CONNECTIONLISTMODEL_ROW_HEIGHT);
   }
 
@@ -218,11 +207,34 @@ void ConnectionListModel::hostLookupFinished(const QHostInfo &hinfo)
 void ConnectionListModel::UpdateConnections()
 {
   //
+  // Update Whitelist
+  //
+  Profile *p=new Profile();
+  p->loadFile("/etc/vncmon.conf");
+  p->loadFile(QDir::homePath()+"/.vnc/vncmonrc");
+  QList<QHostAddress> whitelist=p->addressValues("Vncmon","Whitelist");
+  delete p;
+
+  //
   // Generate Current Connections List
   //
   QMap<int,Connection> conns;
   LoadConnectionTable(conns);
-  
+
+  //
+  // Apply Whitelist
+  //
+  QList<int> ids;
+  for(QMap<int,Connection>::const_iterator it=conns.begin();it!=conns.end();
+      it++) {
+    if(whitelist.contains(it.value().address())) {
+      ids.push_back(it.key());
+    }
+  }
+  for(int i=0;i<ids.size();i++) {
+    conns.remove(ids.at(i));
+  }
+
   //
   // Expire Removed Connections
   //
@@ -242,7 +254,7 @@ void ConnectionListModel::UpdateConnections()
   for(QMap<int,Connection>::const_iterator it=conns.begin();it!=conns.end();
       it++) {
     if((!d_connections.contains(it.value()))&&
-       (!d_whitelisted_addresses.contains(it.value().address()))) {
+       (!whitelist.contains(it.value().address()))) {
       new_conns.push_back(it.value());
       QHostInfo::lookupHost(it.value().address().toString(),
 			    this,&ConnectionListModel::hostLookupFinished);

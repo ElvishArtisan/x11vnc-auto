@@ -65,8 +65,6 @@ class ConnectionListModel : public QAbstractListModel
   ConnectionListModel(QWidget *parent=0);
   ~ConnectionListModel();
   Connection connection(const QModelIndex &index) const;
-  QList<QHostAddress> whitelistedAddresses() const;
-  void setWhitelistedAddresses(const QList<QHostAddress> &addrs);
   void setFont(const QFont &font);
   int rowCount(const QModelIndex &parent) const;
   QVariant data(const QModelIndex &index,int role=Qt::DisplayRole) const;
@@ -85,7 +83,6 @@ class ConnectionListModel : public QAbstractListModel
   QProcess *d_scan_process;
   QDir *d_proc_dir;
   QList<Connection> d_connections;
-  QList<QHostAddress> d_whitelisted_addresses;
   QFontMetrics *d_font_metrics;
 };
 

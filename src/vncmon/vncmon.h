@@ -27,10 +27,8 @@
 #include <QTimer>
 #include <QWidget>
 
-#include "config.h"
 #include "connectionlistmodel.h"
 #include "connectionlistview.h"
-#include "profile.h"
 
 #define VNCMON_SCAN_INTERVAL 5000
 #define VNCMON_USAGE "[options]\n"
@@ -54,7 +52,6 @@ class MainWidget : public QWidget
   QLabel *d_connection_label;
   ConnectionListView *d_connection_listview;
   ConnectionListModel *d_connection_model;
-  Config *d_config;
   QSocketNotifier *d_signal_notifier;
   QTimer *d_startup_timer;
 };

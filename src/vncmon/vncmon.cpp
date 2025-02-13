@@ -69,9 +69,6 @@ MainWidget::MainWidget(QWidget *parent)
   setWindowIcon(QPixmap(vncmon_16x16_xpm));
   QFont bold_font(font().family(),font().pointSize(),QFont::Bold);
 
-  d_config=new Config();
-  d_config->load();
-
   //
   // Check (and if needed, create) the VNC config directory
   //
@@ -94,7 +91,6 @@ MainWidget::MainWidget(QWidget *parent)
 
   d_connection_model=new ConnectionListModel(this);
   d_connection_model->setFont(font());
-  d_connection_model->setWhitelistedAddresses(d_config->whitelist());
 
   d_connection_listview=new ConnectionListView(this);
   d_connection_listview->setModel(d_connection_model);
