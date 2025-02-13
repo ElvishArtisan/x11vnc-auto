@@ -65,3 +65,5 @@
 	* Removed icons from the theme database.
 2025-02-12 Fred Gleason <fredg@paravelsystems.com>
 	* Added a window icon to vncmon(1).
+2025-02-13 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0rc0.
