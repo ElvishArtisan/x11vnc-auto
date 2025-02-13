@@ -67,3 +67,6 @@
 	* Added a window icon to vncmon(1).
 2025-02-13 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 2.0.0rc0.
+2025-02-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'xfce4-genmon-plugin' dependency to the DEB package.
+	* Added a 'qt6-qpa-plugins' dependency to the DEB package.

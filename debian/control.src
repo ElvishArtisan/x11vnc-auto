@@ -8,7 +8,7 @@ Homepage: https://github.com/ElvishArtisan/x11vnc-auto
 
 Package: x11vnc-auto
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, tightvncserver
+Depends: ${shlibs:Depends}, ${misc:Depends}, xfce4-genmon-plugin, qt6-qpa-plugins, tightvncserver
 Description: Automatic VNC login for display :0
  x11vnc-auto is a utility that provides the ability to configure an
  integrated VNC server that will start automatically at boot time and
