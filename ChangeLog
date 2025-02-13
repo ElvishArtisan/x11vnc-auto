@@ -77,3 +77,5 @@
 2025-02-13 Fred Gleason <fredg@paravelsystems.com>
 	* Updated installer scripts in the DEB package to facilitate first-
 	time startup.
+2025-02-13 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0rc2.
