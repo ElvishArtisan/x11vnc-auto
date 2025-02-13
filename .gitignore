@@ -24,6 +24,9 @@ Makefile.in
 missing
 moc_*
 x11vnc-auto-*.tar.gz
+x11vnc-auto_*.debian.tar.xz
+x11vnc-auto_*.orig.tar.gz
+conf/xfce4-genmon.sh
 src/vncmon/paths.h
 src/vncmon/vncmon
 systemd/x11vnc-auto@.service
