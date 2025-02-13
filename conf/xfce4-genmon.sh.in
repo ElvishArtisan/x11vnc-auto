@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Initial startup script for vncmon(1)
+
+@bindir@/vncmon -display :0 &
+echo "<tool>Starting up...</tool>"
+echo "<img>@prefix@/share/x11vnc-auto/vncmon-0.png</img>"

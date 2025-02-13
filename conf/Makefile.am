@@ -17,9 +17,18 @@
 ##
 ## Use automake to process this into a Makefile.in
 
-EXTRA_DIST = vncmon-sample.conf
+install-exec-local:	
+	mkdir -p $(DESTDIR)@prefix@/share/x11vnc-auto
+	cp xfce4-genmon.sh $(DESTDIR)@prefix@/share/x11vnc-auto/
+
+uninstall-local:	
+	rm -f $(DESTDIR)@prefix@/share/x11vnc-auto/xfce4-genmon.sh
+
+EXTRA_DIST = xfce4-genmon.sh.in\
+             vncmon-sample.conf
 
 CLEANFILES = *~
+DISTCLEANFILES = xfce4-genmon.sh
 MAINTAINERCLEANFILES = *~\
                        *.1\
                        *.8\

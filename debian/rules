@@ -13,6 +13,8 @@ binary:
 	dh_installchangelogs ChangeLog
 
 	cp INSTALL debian/x11vnc-auto/usr/share/doc/x11vnc-auto/
+	mkdir -p debian/x11vnc-auto/usr/share/x11vnc-auto
+	cp conf/vncmon-sample.conf  debian/x11vnc-auto/usr/share/x11vnc-auto/
 
 	dh_strip_nondeterminism
 	dh_compress

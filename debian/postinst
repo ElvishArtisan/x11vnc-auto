@@ -3,6 +3,20 @@
 
 case "$1" in
     configure)
+      if test ! -e /etc/vncmon.conf ; then
+          cp /usr/share/x11vnc-auto/vncmon-sample.conf /etc/vncmon.conf
+      fi
+      if test ! -e /home/rd/.vnc/vncmonrc ; then
+          mkdir -p /home/rd/.vnc
+          chown rd:rd /home/rd/.vnc
+          chmod 700 /home/rd/.vnc
+          cp /usr/share/x11vnc-auto/vncmon-sample.conf /home/rd/.vnc/vncmonrc
+          chown rd:rd /home/rd/.vnc/vncmonrc
+          chmod 600 /home/rd/.vnc/vncmonrc
+      fi
+      cp /usr/share/x11vnc-auto/xfce4-genmon.sh /home/rd/.vnc/
+      chown rd:rd /home/rd/.vnc/xfce4-genmon.sh
+      chmod 700 /home/rd/.vnc/xfce4-genmon.sh
       /bin/systemctl daemon-reload
       /bin/systemctl enable x11vnc-auto.socket
       /bin/systemctl start x11vnc-auto.socket

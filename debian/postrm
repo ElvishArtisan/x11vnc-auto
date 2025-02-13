@@ -7,8 +7,10 @@ set -e
 
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
-      /bin/systemctl daemon-reload
-    ;;
+	/bin/systemctl daemon-reload
+	killall vncmon
+	rm -f /home/rd/.vnc/xfce4-genmon.sh
+	;;
 
     *)
         echo "postrm called with unknown argument \`$1'" >&2

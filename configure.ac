@@ -62,6 +62,7 @@ AC_SUBST_FILE(GENERATED_XML_FILE_WARNING)
 GENERATED_XML_FILE_WARNING=$srcdir/helpers/xml_file_warning
 
 AC_CONFIG_FILES([ \
+    conf/xfce4-genmon.sh \
     conf/Makefile \
     debian/Makefile \
     debian/source/Makefile \
@@ -81,6 +82,7 @@ AC_CONFIG_FILES([ \
 AC_OUTPUT()
 chmod 755 build_debs.sh
 chmod 755 x11vnc/build_x11vnc.sh
+chmod 755 conf/xfce4-genmon.sh
 
 AC_MSG_NOTICE()
 AC_MSG_NOTICE(Now enter 'make' to build the software.)
