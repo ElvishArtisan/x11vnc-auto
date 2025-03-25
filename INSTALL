@@ -50,7 +50,7 @@ Distro-Specific Notes
 ---------------------
 1) Ubuntu 22.02 LTS
 
-Required build packages: libsndfile1-dev qt6-base-dev docbook5-xml libxml2-utils docbook-xsl-ns xsltproc fop make g++ autoconf automake debhelper autoconf-archive gnupg pbuilder ubuntu-dev-tools apt-file libxtst-dev libvncserver-dev xfce4-genmon-plugin tightvncserver
+Required build packages: libsndfile1-dev qt6-base-dev docbook5-xml libxml2-utils docbook-xsl-ns xsltproc fop make g++ autoconf automake debhelper autoconf-archive gnupg pbuilder ubuntu-dev-tools apt-file libxtst-dev libvncserver-dev xfce4-genmon-plugin tightvncserver libssl-dev
 
 Configure script invocation: ./configure --prefix=/usr --bindir=/usr/lib/x11vnc-auto
 

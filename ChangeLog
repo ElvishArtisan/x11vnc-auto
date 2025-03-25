@@ -79,3 +79,6 @@
 	time startup.
 2025-02-13 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 2.0.0rc2.
+2025-02-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'libssl-dev' to the list of required build packages in
+	'INSTALL'.
